@@ -1,6 +1,5 @@
 require('dotenv').config();
 
-
 dotenv.config();
 const token = process.env.TOKEN;
 const { REST, Routes, ApplicationCommandOptionType} =  require('discord.js');
@@ -27,6 +26,15 @@ const { REST, Routes, ApplicationCommandOptionType} =  require('discord.js');
 //     },
 // ]
 
+const commands = [
+    {
+        name: "Enter Summoner Name",
+        description: "getSummonerRank",
+        type: ApplicationCommandOptionType.String,
+        required: true,
+    }
+]
+
 const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
@@ -48,11 +56,12 @@ const rest = new REST({ version: '10'}).setToken(process.env.TOKEN);
         console.log('Registerings slash commands...');
 
         await rest.put(
-            Routes.applicationGuildCommands(
-                process.env.CLIENT_ID, 
-                process.env.GUILD_ID
+            Routes.applicationCommands(
+                // process.env.CLIENT_ID, 
+                // process.env.GUILD_ID
+                clientId
                 ),
-                { body: commands }
+                { body: commands },
             )
             console.log('Slash commands were registered successfully');
     } catch (error) {
