@@ -27,7 +27,7 @@ client.on('ready', (c) => {
 //     }
 
 //     if (message.content === 'Dileepa'.toLowerCase()){
-//         message.reply('Is Gay!')
+//         message.reply('')
 //     }
 // });
 
