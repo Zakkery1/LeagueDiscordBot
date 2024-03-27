@@ -39,13 +39,14 @@ client.on('messageCreate', (message) => {
     if (message.content.startsWith("!")){
         message.reply('Looking Up Summoner Account....');
         let userMessage = message.content.slice(1);
+        console.log(userMessage)
         getSummonerRank(userMessage);
         const localStorage = new LocalStorage('./cache');
-        const data = localStorage.getItem('newData');
-        // const parsedData = JSON.parse('data');
+        const data = localStorage.getItem('newData.json');
+        message.reply(data)
+        const parsedData = JSON.parse(`${data}`);
         // console.log(parsedData)
-        console.log(data)
-        
+        console.log(` this is index data: ${parsedData.tier}`)
     }
 });
 
