@@ -3,6 +3,7 @@ require('dotenv').config();
 const { getSummonerRank } = require('./riot-commands.js');
 const { LocalStorage } = require('node-localstorage');
 const{ Client, IntentsBitField } = require('discord.js');
+const { json } = require('stream/consumers');
 const client = new Client({
 
     // guild is a server 
@@ -19,7 +20,6 @@ client.on('ready', (c) => {
     console.log(`✅ ${c.user.tag} is online.`)
 })
 
-
 // Dileepas message
 // client.on('messageCreate', (message) => {
 //     if(message.author.bot){
@@ -35,16 +35,18 @@ client.on('messageCreate', (message) => {
     if(message.author.bot){
         return;
     }
-    if (message.content == "!Summon".toLowerCase()){
+
+    if (message.content.startsWith("!")){
         message.reply('Looking Up Summoner Account....');
-        getSummonerRank();
-        let userMessage = message.content;
-        // const data = LocalStorage.getItem('newData');
-        // message.reply(data)
-        // let x = getSummonerRank();
-        // console.log(x);
+        let userMessage = message.content.slice(1);
+        getSummonerRank(userMessage);
+        const localStorage = new LocalStorage('./cache');
+        const data = localStorage.getItem('newData');
+        // const parsedData = JSON.parse('data');
+        // console.log(parsedData)
+        console.log(data)
+        
     }
 });
 
-
-client.login(process.env.TOKEN); 
+client.login(process.env.TOKEN);
