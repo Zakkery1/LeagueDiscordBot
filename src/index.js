@@ -5,7 +5,6 @@ const { LocalStorage } = require('node-localstorage');
 const{ Client, IntentsBitField } = require('discord.js');
 const { json } = require('stream/consumers');
 const client = new Client({
-
     // guild is a server 
     intents: [
         IntentsBitField.Flags.Guilds,
@@ -44,9 +43,11 @@ client.on('messageCreate', (message) => {
         const localStorage = new LocalStorage('./cache');
         const data = localStorage.getItem('newData.json');
         message.reply(data)
-        const parsedData = JSON.parse(`${data}`);
-        // console.log(parsedData)
-        console.log(` this is index data: ${parsedData.tier}`)
+        let x = data.split(",");
+        // for(const key in x){
+        //     key.removeItem(x[key]);
+        //     console.log(`This is data ${key}: ${x[key]}`);
+        // }
     }
 });
 
