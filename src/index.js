@@ -1,9 +1,10 @@
 
 require('dotenv').config();
-const { getSummonerRank } = require('./riot-commands.js');
+const { getSummonerRank, clearData } = require('./riot-commands.js');
 const { LocalStorage } = require('node-localstorage');
 const{ Client, IntentsBitField } = require('discord.js');
 const { json } = require('stream/consumers');
+const localStorage = new LocalStorage('./cache');
 const client = new Client({
     // guild is a server 
     intents: [
@@ -30,24 +31,32 @@ client.on('ready', (c) => {
 //     }
 // });
 
-client.on('messageCreate', (message) => {
-    if(message.author.bot){
-        return;
-    }
+client.on('messageCreate', async (message) => {
+    try{
+        localStorage.removeItem("newData");
 
-    if (message.content.startsWith("!")){
-        message.reply('Looking Up Summoner Account....');
-        let userMessage = message.content.slice(1);
-        console.log(userMessage)
-        getSummonerRank(userMessage);
-        const localStorage = new LocalStorage('./cache');
-        const data = localStorage.getItem('newData.json');
-        message.reply(data)
-        let x = data.split(",");
-        // for(const key in x){
-        //     key.removeItem(x[key]);
-        //     console.log(`This is data ${key}: ${x[key]}`);
-        // }
+        if(message.author.bot){
+            return;
+        }
+
+        if (message.content.startsWith("!")){
+            message.reply('Looking Up Summoner Account....');
+            let userMessage = message.content.slice(1);
+            if (userMessage.includes(' ')){
+                let summonerName = userMessage.replace(/ /g, '%20');
+                console.log(summonerName)
+            }
+            await getSummonerRank(userMessage);
+            let parsedData = JSON.parse(localStorage.getItem('newData'));
+            message.reply(`Rank: ${parsedData[0].tier} ${parsedData[0].rank}`);
+            // message.reply(parsedData)
+            console.log(parsedData)
+        }
+
+        localStorage.removeItem("newData");
+    }
+    catch(error){
+        console.error(error);
     }
 });
 
