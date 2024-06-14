@@ -20,46 +20,6 @@ client.on("ready", (c) => {
   console.log(`✅ ${c.user.tag} is online.`);
 });
 
-// Dileepas message
-client.on("messageCreate", (message) => {
-  let userMessage = message.content.toLowerCase();
-  console.log(message);
-  if (message.author.bot) {
-    return;
-  }
-
-  if (userMessage === "dileepa!") {
-    message.reply(
-      "Gay! 🏳️‍🌈🏳️‍🌈" +
-        "https://tenor.com/view/on-god-no-cap-big-facts-dance-gif-25336254"
-    );
-  }
-
-  if (userMessage === "butters!") {
-    message.reply(
-      "Is a Bitch " +
-        "https://tenor.com/view/kevin-hart-long-titty-boobs-no-nipple-gif-16607840"
-    );
-  }
-
-  if (userMessage === "zakk!") {
-    message.reply(
-      "Is the best!" +
-        "https://tenor.com/view/best-zeli-the-best-meme-indian-gif-14494441"
-    );
-  }
-  let gif =
-    "https://tenor.com/view/washing-washing-the-food-crazy-weird-strange-gif-15829968";
-  if (userMessage === "anthony!") {
-    message.reply(
-      `is to understand that washing chicken is a cardinal sin. ${gif}`
-    );
-  }
-  // else if (message.content.toLowerCase() === 'max' || message.content.toLowerCase() === 'verstappen'){
-  //     message.reply('https://www.youtube.com/watch?v=jG2AciJ3zHY')
-  // }
-});
-
 client.on("messageCreate", async (message) => {
   try {
     localStorage.removeItem("newData");
