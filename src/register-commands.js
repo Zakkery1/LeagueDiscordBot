@@ -1,9 +1,8 @@
-require('dotenv').config();
+require("dotenv").config();
 
 dotenv.config();
 const token = process.env.TOKEN;
-const { REST, Routes, ApplicationCommandOptionType} =  require('discord.js');
-
+const { REST, Routes, ApplicationCommandOptionType } = require("discord.js");
 
 // const commands = [
 //     {
@@ -27,44 +26,45 @@ const { REST, Routes, ApplicationCommandOptionType} =  require('discord.js');
 // ]
 
 const commands = [
-    {
-        name: "Enter Summoner Name",
-        description: "getSummonerRank",
-        type: ApplicationCommandOptionType.String,
-        required: true,
-    }
-]
+  {
+    name: "Enter Summoner Name",
+    description: "getSummonerRank",
+    type: ApplicationCommandOptionType.String,
+    required: true,
+  },
+];
 
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder } = require("discord.js");
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('user')
-		.setDescription('Provides information about the user.'),
-	async execute(interaction) {
-		// interaction.user is the object representing the User who ran the command
-		// interaction.member is the GuildMember object, which represents the user in the specific guild
-		await interaction.reply(`This command was run by ${interaction.user.username}, who joined on ${interaction.member.joinedAt}.`);
-	},
+  data: new SlashCommandBuilder()
+    .setName("user")
+    .setDescription("Provides information about the user."),
+  async execute(interaction) {
+    // interaction.user is the object representing the User who ran the command
+    // interaction.member is the GuildMember object, which represents the user in the specific guild
+    await interaction.reply(
+      `This command was run by ${interaction.user.username}, who joined on ${interaction.member.joinedAt}.`
+    );
+  },
 };
 
-
-const rest = new REST({ version: '10'}).setToken(process.env.TOKEN);
+const rest = new REST({ version: "10" }).setToken(process.env.TOKEN);
 
 (async () => {
-    try {
-        console.log('Registerings slash commands...');
+  try {
+    console.log("Registerings slash commands...");
 
-        await rest.put(
-            Routes.applicationCommands(
-                // process.env.CLIENT_ID, 
-                // process.env.GUILD_ID
-                clientId
-                ),
-                { body: commands },
-            )
-            console.log('Slash commands were registered successfully');
-    } catch (error) {
-        console.log(`There was an error: ${error}`);
-    }
+    await rest.put(
+      Routes.applicationCommands(
+        // process.env.CLIENT_ID,
+        // process.env.GUILD_ID
+        clientId
+      ),
+      { body: commands }
+    );
+    console.log("Slash commands were registered successfully");
+  } catch (error) {
+    console.log(`There was an error: ${error}`);
+  }
 })();
